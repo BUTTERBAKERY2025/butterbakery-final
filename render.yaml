@@ -8,7 +8,24 @@ services:
     startCommand: node start.js
     envVars:
       - key: NODE_VERSION
-        value: 18.12.1
+        value: 20.11.0  # استخدام إصدار أحدث من Node.js
       - key: NODE_ENV
         value: production
+      - key: PORT
+        value: 10000
+      - key: DATABASE_URL
+        fromDatabase:
+          name: butterbakery-db
+          property: connectionString
     autoDeploy: true
+    healthCheckPath: /api/status
+    numInstances: 1
+    domains:
+      - butterbakery.onrender.com
+
+databases:
+  - name: butterbakery-db
+    region: frankfurt
+    plan: free
+    databaseName: butterbakery
+    user: butterbakery_user
